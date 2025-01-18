@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Spicy Food Store - Card Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .card-header {
+            font-weight: 700;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        button {
+            font-weight: 500;
+        }
+        .bg-primary {
+            background-color: #FF0000 !important;
+        }
+        .qr-code-container {
+            width: 200px;
+            height: auto;
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .qr-code-container img {
+            width: 100%;
+            height: auto;
+        }
+        .user-guide-btn {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .video-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .video-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333333;
+            text-align: center;
+        }
+        .video-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 position-relative">
+        <div class="card mt-5">
+            <!-- QR Code and User Guide -->
+            <div class="qr-code-container">
+                <img id="qrCode" style="display: none;" alt="QR Code" />
+                <button type="button" class="btn btn-success user-guide-btn" onclick="generateQRCode()">User Guide</button>
+            </div>
+
+            <div class="card-header text-center bg-primary text-white">
+                <h4>Little Spicy Food Store - Card Form</h4>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email (Optional)</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="review-link" class="form-label">Review Link</label>
+                        <input type="url" class="form-control" id="review-link" name="review_link" placeholder="Paste your review link here" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <section class="video-section">
+            <div class="video-section-title">Watch Our Demo Video</div>
+            <div class="video-container">
+                <video controls width="600" tabindex="0">
+                    <source src="{% static 'video/demo.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function generateQRCode() {
+            fetch('/generate-qr/')
+                .then(response => response.json())
+                .then(data => {
+                    const qrCode = document.getElementById('qrCode');
+                    qrCode.src = data.qr_url;
+                    qrCode.style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>
